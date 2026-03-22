@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+  <symbol id="icon-property" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+    <path d="M9 22v-4h6v4"></path>
+    <path d="M8 6h.01"></path>
+    <path d="M12 6h.01"></path>
+    <path d="M16 6h.01"></path>
+    <path d="M8 10h.01"></path>
+    <path d="M12 10h.01"></path>
+    <path d="M16 10h.01"></path>
+    <path d="M8 14h.01"></path>
+    <path d="M12 14h.01"></path>
+    <path d="M16 14h.01"></path>
+  </symbol>
+  <symbol id="icon-investor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+    <circle cx="12" cy="7" r="4"></circle>
+  </symbol>
+  <symbol id="icon-gs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+    <circle cx="12" cy="7" r="4"></circle>
+    <path d="M18 11V7a6 6 0 0 0-12 0v4"></path>
+    <path d="M4 11h3v4H4z"></path>
+    <path d="M17 11h3v4h-3z"></path>
+  </symbol>
+  <symbol id="icon-ota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+    <path d="M8 21h8"></path>
+    <path d="M12 17v4"></path>
+    <line x1="6" y1="8" x2="6" y2="8.01"></line>
+    <line x1="10" y1="8" x2="18" y2="8"></line>
+    <line x1="6" y1="12" x2="6" y2="12.01"></line>
+    <line x1="10" y1="12" x2="18" y2="12"></line>
+  </symbol>
+</svg>

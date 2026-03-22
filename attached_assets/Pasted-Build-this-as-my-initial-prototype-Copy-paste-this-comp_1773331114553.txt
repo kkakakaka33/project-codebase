@@ -1,0 +1,218 @@
+Build this as my initial prototype
+
+Copy-paste this component to /components/ui folder:
+```tsx
+trail-card.tsx
+// components/ui/trail-card.tsx
+import * as React from "react";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+import { cn } from "@/lib/utils"; // Your utility for merging class names
+import { Button } from "@/components/ui/button"; // Assuming you have a Button component
+
+// Define the props interface for type safety and reusability
+interface TrailCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  imageUrl: string;
+  mapImageUrl: string;
+  title: string;
+  location: string;
+  difficulty: string;
+  creators: string;
+  distance: string;
+  elevation: string;
+  duration: string;
+  onDirectionsClick?: () => void;
+}
+
+// Define stat item component for DRY principle
+const StatItem = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex flex-col">
+    <span className="text-sm font-semibold text-foreground">{value}</span>
+    <span className="text-xs text-muted-foreground">{label}</span>
+  </div>
+);
+
+const TrailCard = React.forwardRef<HTMLDivElement, TrailCardProps>(
+  (
+    {
+      className,
+      imageUrl,
+      mapImageUrl,
+      title,
+      location,
+      difficulty,
+      creators,
+      distance,
+      elevation,
+      duration,
+      onDirectionsClick,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <motion.div
+        ref={ref}
+        className={cn(
+          "w-full max-w-sm overflow-hidden rounded-2xl bg-card text-card-foreground shadow-lg",
+          className
+        )}
+        whileHover={{ y: -5, scale: 1.02 }} // Subtle lift and scale animation on hover
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        {...props}
+      >
+        {/* Top section with background image and content */}
+        <div className="relative h-60 w-full">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 flex w-full items-end justify-between p-4">
+            <div className="text-white">
+              <h3 className="text-xl font-bold">{title}</h3>
+              <p className="text-sm text-white/90">{location}</p>
+            </div>
+            {/* The button will animate in on hover of the parent card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileHover={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 0, x: 20 }} // Kept hidden by default
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Button
+                variant="secondary"
+                onClick={onDirectionsClick}
+                aria-label={`Get directions to ${title}`}
+              >
+                Directions
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Bottom section with trail details */}
+        <div className="p-5">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-bold text-foreground">{difficulty}</p>
+              <p className="text-xs text-muted-foreground">{creators}</p>
+            </div>
+            {/* Simple SVG or image representation of the trail map */}
+            <img
+              src={mapImageUrl}
+              alt="Trail map"
+              className="h-10 w-20 object-contain"
+            />
+          </div>
+          <div className="my-4 h-px w-full bg-border" />
+          <div className="flex justify-between">
+            <StatItem label="Distance" value={distance} />
+            <StatItem label="Elevation" value={elevation} />
+            <StatItem label="Duration" value={duration} />
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+);
+
+TrailCard.displayName = "TrailCard";
+
+export { TrailCard };
+
+demo.tsx
+// demo.tsx
+import { TrailCard } from "@/components/ui/trail-card";
+
+export default function TrailCardDemo() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <TrailCard
+        title="Embercrest Ridge"
+        location="Silverpine Mountains"
+        difficulty="Hard"
+        creators="1886 by Helen Rowe & Elias Mendez"
+        distance="12.4km"
+        elevation="870m"
+        duration="4h 45m"
+        // Using a placeholder image service for demonstration
+        imageUrl="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070&auto=format&fit=crop"
+        // A placeholder for the map SVG/image
+        mapImageUrl="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-3JYNLpogg5zknunPABpdOpEjJmZN5R.png&w=320&q=75"
+        onDirectionsClick={() => alert("Directions clicked!")}
+      />
+    </div>
+  );
+}
+```
+
+Copy-paste these files for dependencies:
+```tsx
+shadcn/button
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
+
+```
+
+Install these NPM dependencies:
+```bash
+lucide-react, framer-motion, @radix-ui/react-slot, class-variance-authority
+```
