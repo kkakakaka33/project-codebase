@@ -204,3 +204,83 @@ function animateNumber(el) {
   setActive(0);
   startAutoPlay();
 })();
+
+// ---- Modals & Sharing ----
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  modal.classList.add('gs-modal--active');
+  document.body.style.overflow = 'hidden';
+  // Update URL fragment without reloading for sharability
+  const caseSlug = id.replace('modal-', '');
+  history.replaceState(null, null, '#' + caseSlug);
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  modal.classList.remove('gs-modal--active');
+  document.body.style.overflow = '';
+  // Clean up URL fragment
+  history.replaceState(null, null, window.location.pathname);
+}
+
+// Copy link to clipboard with toast
+function copyShareLink(caseId) {
+  const baseUrl = window.location.origin + window.location.pathname;
+  const fullUrl = caseId ? (baseUrl + '#' + caseId.replace('modal-', '')) : baseUrl;
+
+  navigator.clipboard.writeText(fullUrl).then(() => {
+    showToast('シェア用リンクを発行しました！');
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+  });
+}
+
+// Simple Toast Notification
+function showToast(message) {
+  let toast = document.getElementById('gs-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'gs-toast';
+    toast.className = 'gs-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('gs-toast--visible');
+  setTimeout(() => {
+    toast.classList.remove('gs-toast--visible');
+  }, 3000);
+}
+
+// Auto-open modal from fragment on load
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#case')) {
+    const modalId = 'modal-' + hash.substring(1);
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      setTimeout(() => openModal(modalId), 500);
+    }
+  }
+
+  // Handle collage anchor
+  syncCollage();
+});
+
+// Collage Anchor logic (consolidated here)
+function syncCollage() {
+  const anchor = document.querySelector('.aura-collage-anchor');
+  const collage = document.querySelector('.aura-collage');
+  if (!anchor || !collage) return;
+  const rect = anchor.getBoundingClientRect();
+  collage.style.top = (rect.top + window.scrollY) + 'px';
+}
+
+window.addEventListener('resize', syncCollage);
+window.addEventListener('scroll', syncCollage);
+
+// Expose functions globally
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.copyShareLink = copyShareLink;

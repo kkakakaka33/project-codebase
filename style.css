@@ -325,6 +325,11 @@ ul   { list-style: none; }
   font-size: clamp(40px, 5vw, 56px);
   font-weight: 700; color: #FFF; line-height: 1;
 }
+.aura-brand__stat-unit {
+  font-size: 0.38em;
+  font-weight: 600;
+  margin-left: 4px;
+}
 .aura-brand__stat-label {
   font-family: var(--font-primary);
   font-size: 14px; font-weight: 500;
@@ -338,6 +343,38 @@ ul   { list-style: none; }
   line-height: 1.85; margin-bottom: 20px;
 }
 .aura-brand__right p:last-child { margin-bottom: 0; }
+.aura-brand__ai-card {
+  margin-top: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.aura-brand__ai-title {
+  margin: 0 0 16px;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.85;
+  letter-spacing: 0;
+}
+.aura-brand__ai-desc {
+  margin: 0 0 20px;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.8;
+}
+.aura-brand__ai-list {
+  margin: 0;
+  font-family: var(--font-primary);
+  color: rgba(255,255,255,0.75);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.85;
+}
 
 /* Platform logos grid */
 .aura-brand__platforms-label {
@@ -443,6 +480,9 @@ ul   { list-style: none; }
   .aura-card__img-wrap img { height: 140px !important; }
   .aura-brand__heading { font-size: 28px; }
   .aura-brand__stat-num { font-size: 36px; }
+  .aura-brand__ai-title,
+  .aura-brand__ai-desc,
+  .aura-brand__ai-list { font-size: 15px; }
   .aura-nav__contact { padding: 10px 20px; font-size: 14px; }
 }
 
@@ -517,9 +557,13 @@ ul   { list-style: none; }
   color: var(--clr-text-sec);
 }
 .gs-numbers__label {
+  display: block;
   font-size: 14px;
   font-weight: 500;
   color: var(--clr-text-sec);
+  line-height: 1.6;
+  max-width: 140px;
+  margin: 0 auto;
 }
 
 /* ---- Service ---- */
@@ -861,7 +905,10 @@ ul   { list-style: none; }
   background: rgba(255,255,255,0.28);
 }
 .gs-cases__card-body {
-  padding: 20px 24px 24px;
+  padding: 20px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 .gs-cases__metrics-row {
   display: flex;
@@ -944,6 +991,7 @@ ul   { list-style: none; }
   margin: 0 auto;
 }
 .gs-feature__col {
+  border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 20px;
   overflow: visible;
   position: relative;
@@ -951,14 +999,14 @@ ul   { list-style: none; }
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .gs-feature__col--other {
-  border: 1.5px solid transparent;
+  border-color: rgba(17, 17, 17, 0.08);
 }
 .gs-feature__col--other:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.04);
 }
 .gs-feature__col--good {
-  border: 2px solid transparent;
+  border-color: rgba(255, 56, 92, 0.14);
   box-shadow: none;
 }
 .gs-feature__col--good:hover {
@@ -1833,150 +1881,255 @@ ul   { list-style: none; }
 .gs-modal__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(12px);
 }
 .gs-modal__content {
   position: relative;
-  background: #FFF;
+  background: #ffffff;
   width: 100%;
-  max-width: 800px;
-  max-height: 90vh;
-  border-radius: 12px;
-  padding: 40px;
+  max-width: 860px;
+  max-height: min(90vh, 900px);
+  border-radius: 20px;
+  padding: 44px;
   overflow-y: auto;
   z-index: 10;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  transform: translateY(20px) scale(0.98);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+.gs-modal--active .gs-modal__content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }
 .gs-modal__close {
-  position: absolute;
-  top: 24px;
-  right: 24px;
+  position: static !important;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #F7F7F7;
-  color: #222;
-  border: none;
-  font-size: 18px;
+  background: rgba(248, 250, 252, 0.7);
+  backdrop-filter: blur(8px);
+  color: #1F2937;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 20;
+  box-shadow: none;
 }
 .gs-modal__close:hover {
-  transform: scale(1.05);
-  background: #EBEBEB;
+  transform: translateY(-1px);
+  background: #FFFFFF;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+.gs-modal__hero {
+  margin-bottom: 26px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+.gs-modal__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #e31c5f;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 .gs-modal__title {
-  font-size: clamp(20px, 4vw, 24px);
+  font-size: clamp(24px, 3vw, 34px);
   font-weight: 700;
-  color: #222;
-  margin-bottom: 24px;
-  padding-right: 48px;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  color: #111827;
+  margin-bottom: 10px;
+  padding-right: 104px;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+.gs-modal__subtitle {
+  max-width: 640px;
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #667085;
 }
 .gs-modal__images {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 40px;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(220px, 0.95fr);
+  gap: 14px;
+  margin-bottom: 26px;
 }
 .gs-modal__img-main {
-  flex: 2;
-  border-radius: 12px;
+  border-radius: 24px;
   overflow: hidden;
 }
 .gs-modal__img-main img {
   width: 100%;
-  height: 280px;
+  height: 320px;
   object-fit: cover;
 }
 .gs-modal__img-sub {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 .gs-modal__img-sub img {
   width: 100%;
-  height: calc(140px - 6px);
+  height: 153px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 18px;
 }
 
 .gs-modal__yield-box {
   display: flex;
   gap: 16px;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
 }
 .gs-modal__yield-item {
   flex: 1;
-  background: #F7F7F7;
-  border: 1px solid #EBEBEB;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.06);
   border-radius: 16px;
   padding: 24px;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.gs-modal__yield-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, #F4C75A, #e31c5f);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.gs-modal__yield-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+}
+.gs-modal__yield-item:hover::before {
+  opacity: 1;
+}
+.gs-modal__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.04);
+}
+.gs-modal__fact {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid rgba(15, 23, 42, 0.06);
+}
+.gs-modal__fact:last-child {
+  border-right: none;
+}
+.gs-modal__fact-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.gs-modal__fact-value {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  line-height: 1.2;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  font-weight: 700;
 }
 .gs-modal__yield-head {
-  color: #717171;
-  font-size: 13px;
+  color: #6B7280;
+  font-size: 11px;
   font-weight: 600;
   margin-bottom: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
 }
 .gs-modal__yield-body {
   display: flex;
   align-items: baseline;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 4px;
 }
 .gs-modal__yield-val {
   font-family: 'Montserrat', sans-serif;
-  font-size: 40px;
-  font-weight: 700;
-  color: #FF385C;
+  font-size: 36px;
+  font-weight: 800;
+  color: #111827;
   line-height: 1;
 }
 .gs-modal__yield-unit {
-  font-size: 18px;
-  font-weight: 600;
-  color: #FF385C;
+  font-size: 15px;
+  font-weight: 700;
+  color: #6b7280;
+}
+.gs-modal__yield-val--red,
+.gs-modal__yield-item:last-child .gs-modal__yield-val,
+.gs-modal__yield-item:last-child .gs-modal__yield-unit {
+  color: #e31c5f;
 }
 
 .gs-modal__section {
-  margin-bottom: 48px;
+  margin-bottom: 32px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 .gs-modal__section-header {
-  font-size: 16px;
-  font-weight: 600;
-  color: #222;
-  margin-bottom: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .gs-modal__section-header::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: #EBEBEB;
-  margin-left: 16px;
+  background: rgba(15, 23, 42, 0.08);
+  margin-left: 14px;
 }
 
 .gs-modal__init-cost {
-  display: flex;
-  gap: 32px;
-  font-size: 14px;
-  color: #222;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 22px;
+  font-size: 13px;
+  color: #1F2937;
 }
 .gs-modal__init-left {
-  flex: 1;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
 }
 .gs-modal__init-left strong {
   display: block;
@@ -1986,32 +2139,41 @@ ul   { list-style: none; }
 .gs-modal__init-left ul {
   list-style: none;
   padding: 0;
-  line-height: 1.8;
-  color: #717171;
+  margin: 0;
+  line-height: 1.7;
+  color: #6B7280;
 }
 .gs-modal__init-left li::before {
   content: '・';
-  color: #222;
+  color: #111827;
 }
 
 .gs-modal__init-right {
-  flex: 1.5;
+  padding: 0;
 }
 .gs-modal__table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 14px;
-  color: #222;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
 }
 .gs-modal__table th, .gs-modal__table td {
-  padding: 16px;
+  padding: 14px 16px;
   text-align: left;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
 }
 .gs-modal__table th {
-  background: #F7F7F7;
+  background: #f8fafc;
   font-weight: 600;
-  color: #222;
+  color: #64748b;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
 }
 .gs-modal__table tbody tr:last-child td {
   border-bottom: none;
@@ -2019,16 +2181,16 @@ ul   { list-style: none; }
 
 .gs-modal__total-right {
   text-align: right;
-  margin-top: 16px;
-  font-size: 16px;
-  color: #222;
-  font-weight: 500;
+  margin-top: 14px;
+  font-size: 14px;
+  color: #111827;
+  font-weight: 600;
 }
 .gs-modal__total-num {
   font-family: 'Montserrat', sans-serif;
-  font-size: 32px;
-  font-weight: 700;
-  color: #FF385C;
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
   margin: 0 6px;
 }
 
@@ -2039,45 +2201,55 @@ ul   { list-style: none; }
   vertical-align: middle;
 }
 .gs-modal__large-num {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
 }
 .gs-modal__tr-total td {
-  background: transparent;
+  background: #f8fafc;
   font-weight: 700;
-  color: #222;
-  border-top: 2px solid #EBEBEB;
+  color: #0f172a;
+  border-top: 2px solid rgba(15, 23, 42, 0.1);
 }
 
 .gs-modal__bottom-stats {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid #EBEBEB;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 24px 32px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 16px;
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
 }
 .gs-modal__monthly-profit {
   font-family: 'Montserrat', sans-serif;
-  font-size: 40px;
-  color: #222;
+  font-size: 42px;
+  color: #ffffff;
   font-weight: 800;
-  line-height: 1;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
 }
 .gs-modal__unit {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   margin-left: 8px;
-  color: #717171;
+  color: rgba(255, 255, 255, 0.7);
 }
 .gs-modal__yearly-profit {
-  font-size: 15px;
-  color: #FF385C;
-  font-weight: 700;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: right;
 }
 .gs-modal__yearly-num {
   font-family: 'Montserrat', sans-serif;
   font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 6px;
 }
 
 
@@ -2126,34 +2298,160 @@ ul   { list-style: none; }
   color: #FF385C;
 }
 .gs-cases__card-btn-full {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   text-align: center;
-  background: #FF385C;
-  color: #FFF;
-  padding: 14px 0;
-  font-size: 15px;
-  font-weight: 700;
+  background: transparent;
+  color: #111827;
+  padding: 11px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   text-decoration: none;
   cursor: pointer;
-  border: none;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(255, 56, 92, 0.15);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 999px;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  box-shadow: none;
 }
 .gs-cases__card-btn-full:hover {
-  background: #D70466;
-  transform: scale(1.02);
-  box-shadow: 0 6px 16px rgba(227, 28, 95, 0.25);
+  transform: translateY(-1px);
+  background: #f8fafc;
+  border-color: rgba(15, 23, 42, 0.24);
 }
 
 @media (max-width: 768px) {
-  .gs-modal__images { flex-direction: column; }
-  .gs-modal__img-main img, .gs-modal__img-sub img { height: 160px; }
-  .gs-modal__img-sub { flex-direction: row; }
-  .gs-modal__init-cost { flex-direction: column; }
-  .gs-modal__table--monthly th, .gs-modal__table--monthly td { padding: 8px; font-size: 11px; }
-  .gs-modal__monthly-profit { font-size: 28px; }
-  .gs-modal__yearly-num { font-size: 22px; }
+  .gs-modal {
+    padding: 14px;
+  }
+  .gs-modal__content {
+    padding: 24px;
+    border-radius: 16px;
+    max-height: 86vh;
+  }
+  .gs-modal__header-actions {
+    top: 14px;
+    right: 14px;
+    gap: 8px;
+  }
+  .gs-modal__title {
+    padding-right: 92px;
+    font-size: 24px;
+  }
+  .gs-modal__subtitle {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+  .gs-modal__images {
+    grid-template-columns: 1fr;
+    margin-bottom: 18px;
+  }
+  .gs-modal__img-main img, .gs-modal__img-sub img {
+    height: 180px;
+  }
+  .gs-modal__img-sub {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .gs-modal__yield-box,
+  .gs-modal__facts,
+  .gs-modal__bottom-stats,
+  .gs-modal__init-cost {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+  .gs-modal__fact {
+    border-right: none;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  }
+  .gs-modal__fact:last-child {
+    border-bottom: none;
+  }
+  .gs-modal__section {
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 24px;
+  }
+  .gs-modal__table {
+    font-size: 12px;
+  }
+  .gs-modal__table--monthly th, .gs-modal__table--monthly td {
+    padding: 10px;
+    font-size: 11px;
+  }
+  .gs-modal__yield-item {
+    padding: 16px;
+  }
+  .gs-modal__yield-val,
+  .gs-modal__monthly-profit {
+    font-size: 30px;
+  }
+  .gs-modal__total-num,
+  .gs-modal__yearly-num {
+    font-size: 22px;
+  }
+  .gs-modal__bottom-stats {
+    align-items: flex-start;
+    padding: 20px;
+  }
+  .gs-modal__yearly-profit {
+    text-align: left;
+  }
 }
 
+
+/* --- Modal Sharing Features --- */
+.gs-modal__header-actions {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gs-modal__share {
+  background: rgba(248, 250, 252, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: #4B5563;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none;
+}
+
+.gs-modal__share:hover {
+  transform: translateY(-1px);
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* Toast Notification */
+.gs-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #111827;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 99px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 10000;
+}
+
+.gs-toast--visible {
+  transform: translateX(-50%) translateY(0);
+}
